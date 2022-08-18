@@ -1,0 +1,6 @@
+namespace SuperFastBlogAPI.Areas.HelpPage.ModelDescriptions
+{
+    public class SimpleTypeModelDescription : ModelDescription
+    {
+    }
+}

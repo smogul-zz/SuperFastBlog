@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SuperFastModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbl_article">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Topic" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Heading" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Content" Type="varchar" MaxLength="8000" Nullable="false" />
+    <Property Name="Image" Type="varbinary" MaxLength="8000" Nullable="false" />
+    <Property Name="PostedUserID" Type="int" Nullable="false" />
+    <Property Name="DatePosted" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_contact">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="PostID" Type="int" Nullable="false" />
+    <Property Name="Message" Type="varchar" MaxLength="2000" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_user">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="8000" Nullable="false" />
+    <Property Name="Role" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="tbl_article_ibfk_1">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+    <End Role="tbl_article" Type="Self.tbl_article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_article">
+        <PropertyRef Name="PostedUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tbl_contact_ibfk_1">
+    <End Role="tbl_article" Type="Self.tbl_article" Multiplicity="1" />
+    <End Role="tbl_contact" Type="Self.tbl_contact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_article">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_contact">
+        <PropertyRef Name="PostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SuperFastModelStoreContainer">
+    <EntitySet Name="tbl_article" EntityType="Self.tbl_article" Schema="sql6512841" store:Type="Tables" />
+    <EntitySet Name="tbl_contact" EntityType="Self.tbl_contact" Schema="sql6512841" store:Type="Tables" />
+    <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="sql6512841" store:Type="Tables" />
+    <AssociationSet Name="tbl_article_ibfk_1" Association="Self.tbl_article_ibfk_1">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_article" EntitySet="tbl_article" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_contact_ibfk_1" Association="Self.tbl_contact_ibfk_1">
+      <End Role="tbl_article" EntitySet="tbl_article" />
+      <End Role="tbl_contact" EntitySet="tbl_contact" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

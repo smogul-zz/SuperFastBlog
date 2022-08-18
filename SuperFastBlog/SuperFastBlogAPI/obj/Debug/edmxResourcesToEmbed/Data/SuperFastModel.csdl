@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SuperFastModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbl_article">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Topic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Heading" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Content" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="PostedUserID" Type="Int32" Nullable="false" />
+    <Property Name="DatePosted" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="tbl_user" Relationship="Self.tbl_article_ibfk_1" FromRole="tbl_article" ToRole="tbl_user" />
+    <NavigationProperty Name="tbl_contact" Relationship="Self.tbl_contact_ibfk_1" FromRole="tbl_article" ToRole="tbl_contact" />
+  </EntityType>
+  <EntityType Name="tbl_contact">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PostID" Type="Int32" Nullable="false" />
+    <Property Name="Message" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="tbl_article" Relationship="Self.tbl_contact_ibfk_1" FromRole="tbl_contact" ToRole="tbl_article" />
+  </EntityType>
+  <EntityType Name="tbl_user">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Role" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbl_article" Relationship="Self.tbl_article_ibfk_1" FromRole="tbl_user" ToRole="tbl_article" />
+  </EntityType>
+  <Association Name="tbl_article_ibfk_1">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+    <End Role="tbl_article" Type="Self.tbl_article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_article">
+        <PropertyRef Name="PostedUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tbl_contact_ibfk_1">
+    <End Role="tbl_article" Type="Self.tbl_article" Multiplicity="1" />
+    <End Role="tbl_contact" Type="Self.tbl_contact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_article">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_contact">
+        <PropertyRef Name="PostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SuperFastEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_article" EntityType="Self.tbl_article" />
+    <EntitySet Name="tbl_contact" EntityType="Self.tbl_contact" />
+    <EntitySet Name="tbl_user" EntityType="Self.tbl_user" />
+    <AssociationSet Name="tbl_article_ibfk_1" Association="Self.tbl_article_ibfk_1">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_article" EntitySet="tbl_article" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_contact_ibfk_1" Association="Self.tbl_contact_ibfk_1">
+      <End Role="tbl_article" EntitySet="tbl_article" />
+      <End Role="tbl_contact" EntitySet="tbl_contact" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
