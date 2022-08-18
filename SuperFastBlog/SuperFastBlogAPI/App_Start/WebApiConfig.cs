@@ -21,6 +21,18 @@ namespace SuperFastBlogAPI
           );
 
             config.Routes.MapHttpRoute(
+             name: "Article",
+             routeTemplate: "api/{controller}/{id}",
+             defaults: new { controller = "Article", action = "GetArticles", id = RouteParameter.Optional }
+         );
+
+            config.Routes.MapHttpRoute(
+             name: "Contact",
+             routeTemplate: "api/{controller}/{id}",
+             defaults: new { controller = "Contact", action = "GetAllContacts", id = RouteParameter.Optional }
+         );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
