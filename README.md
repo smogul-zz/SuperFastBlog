@@ -1,5 +1,8 @@
 # SuperFastBlog
-A web API designed in asp.net, including an MVC consumption application
+A web API designed in asp.net, including an MVC consumption application. 
+
+I have used this approach because the api consumption can be used by multiple devices an platforms. I also make it ease to reuse
+
 
 =======================First things first DATABASE============================
 1. The SQL database is hosted on phpMyAdmin, I used a site called freesqldatabase.com
